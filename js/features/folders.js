@@ -1,0 +1,9 @@
+/* Folders: group documents your own way (folders.html). */
+const fl=()=>FX.get('folders_'+me().id,[]),fsave=a=>FX.set('folders_'+me().id,a);
+FX.link('Folders','folders.html');
+acts.fadd=id=>{const F=fl(),v=$('#fs'+id).value;if(v){F.find(x=>x.id===id).ids.push(v);fsave(F);redraw()}};
+acts.funrm=v=>{const[a,b]=v.split('|'),F=fl(),f=F.find(x=>x.id===a);f.ids=f.ids.filter(x=>x!==b);fsave(F);redraw()};
+acts.fdel=id=>{if(confirm('Delete this folder? Your documents are kept.')){fsave(fl().filter(x=>x.id!==id));redraw()}};
+FX.page('folders',()=>{const u=me();redraw=()=>{const F=fl(),D=DV.docs().filter(d=>d.owner===u.id);
+ main().innerHTML=`<div class="wrap pg"><h1>Folders</h1><form id="ff" class="card inline" novalidate>${fld('fn','New folder name','text','maxlength="30"')}<div class="fld"><button class="btn">Create folder</button></div></form>${F.map(f=>`<section class="card" style="margin-top:14px"><h2 style="margin-top:0">📁 ${esc(f.name)}</h2><ul>${f.ids.map(i=>D.find(d=>d.id===i)).filter(Boolean).map(d=>`<li><a href="document.html?id=${d.id}">${esc(d.title)}</a> <button class="btn sm alt" data-act="funrm" data-id="${f.id}|${d.id}">Remove</button></li>`).join('')||'<li class="muted">Empty folder</li>'}</ul><div class="inline"><select id="fs${f.id}" aria-label="Add a document to ${esc(f.name)}">${D.filter(d=>!f.ids.includes(d.id)).map(d=>`<option value="${d.id}">${esc(d.title)} (${esc(d.number)})</option>`).join('')}</select><button class="btn sm" data-act="fadd" data-id="${f.id}">Add</button><button class="btn sm danger" data-act="fdel" data-id="${f.id}">Delete folder</button></div></section>`).join('')}</div>`;
+ $('#ff').onsubmit=e=>{e.preventDefault();const n=$('#fn').value.trim();if(bad('fn',n.length<2&&'Enter a folder name (at least 2 characters).'))return;fsave([...fl(),{id:'f'+Date.now(),name:n,ids:[]}]);redraw()}};redraw()});

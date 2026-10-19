@@ -1,0 +1,7 @@
+/* Drag-and-drop upload area with a real read-progress bar and image preview (Uploaded page). */
+FX.css('.dz{border:2px dashed var(--blue);border-radius:8px;padding:16px;text-align:center;background:var(--sky);margin-bottom:14px}.dz.on{background:#cfe1ff}.pbar{height:8px;background:var(--line);border-radius:4px;margin-top:8px}.pbar i{display:block;height:100%;width:0;background:var(--blue);border-radius:4px}.dz img{max-height:120px;margin-top:8px}');
+FX.watch(()=>{const f=$('#ufile');if(!f||$('.dz'))return;const dz=document.createElement('div');dz.className='dz';dz.innerHTML='<p>Drag and drop a file here, or use the file box below.</p><div class="pbar" hidden><i></i></div><div class="pv" aria-live="polite"></div>';f.closest('.fld').before(dz);
+ const show=file=>{if(!file)return;const bar=$('.pbar',dz),i=$('i',bar),pv=$('.pv',dz);bar.hidden=false;i.style.width='0';pv.textContent=file.name+' ('+Math.round(file.size/1024)+' KB)';
+  const r=new FileReader();r.onprogress=e=>{if(e.lengthComputable)i.style.width=e.loaded/e.total*100+'%'};r.onload=()=>{i.style.width='100%';if(file.type.startsWith('image/'))pv.insertAdjacentHTML('beforeend','<br><img alt="Preview of the selected file" src="'+r.result+'">')};r.readAsDataURL(file)};
+ ['dragover','dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.toggle('on',ev==='dragover');if(ev==='drop'&&e.dataTransfer.files[0]){f.files=e.dataTransfer.files;show(f.files[0])}}));
+ f.addEventListener('change',()=>show(f.files[0]))});

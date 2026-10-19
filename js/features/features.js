@@ -1,0 +1,4 @@
+/* FEATURE LOADER. Each name below is a file in js/features/. Delete a name (or put // before it) to switch that feature off.
+   Keep "core" first. This file is loaded by one line in every HTML page, right after js/app.js. */
+const FEATURES=['core','dark-mode','favourites','recycle-bin','view-toggle','tags-notes','drag-drop-upload','expiry-reminders','folders','bulk-actions','qr-code','esign','consent-log','admin-chart','tour','polish','accessibility','pwa','demo-guide','legal-pages','cookie-banner','feedback','profile-photo','storage-meter','signin-history','export-data','help-search','language-switcher','issuer-directory','help-assistant','doc-history','nominees','undo-toast','idle-logout','announcements','review-queue','admin-charts-2','admin-import','admin-settings','messages','dashboard-layout'];
+FEATURES.forEach(f=>document.write('<script src="js/features/'+f+'.js"><\/script>'));
