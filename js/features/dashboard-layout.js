@@ -15,6 +15,7 @@ FX.css(`:root{--hh:104px}
 body.hdr-a11y .more,body.hdr-a11y #fxab{display:none}
 body.hdr-a11y .fxa{left:auto;right:14px;top:calc(var(--hh) + 6px);bottom:auto}
 body.has-side #nav{display:none}
+body.hdr-a11y .bar-in{max-width:none;padding:0 20px}body.hdr-a11y .brand{margin-right:auto}body.hdr-a11y #nav{margin-left:16px}
 #side{position:fixed;left:0;top:var(--hh);bottom:0;width:232px;background:#fff;border-right:1px solid var(--line);padding:14px 10px;overflow:auto;z-index:15}
 #side a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--text);font-weight:600}
 #side a:hover,#side a[aria-current]{background:var(--sky);color:var(--blue)}
@@ -25,7 +26,7 @@ body.has-side main,body.has-side footer{margin-left:232px}
 .itile{flex:0 0 220px;scroll-snap-align:start;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;text-decoration:none;color:var(--text)}.itile:hover,.ut:hover{border-color:var(--blue)}
 .utg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
 .ut{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px 10px;text-decoration:none;color:var(--text);font-weight:600}.ui{font-size:30px}
-${T2}#side,${T2}.pmenu>div,${T2}.hbtn,${T2}.itile,${T2}.ut{background:#15233b;color:#e6edf8}${T2}.pmenu>div a,${T2}.pmenu>div button,${T2}#side a{color:#e6edf8}
+${T2}#side,${T2}.pmenu>div,${T2}.hbtn,${T2}.itile,${T2}.ut{background:#0e2a4a;color:#e6edf8}${T2}.pmenu>div a,${T2}.pmenu>div button,${T2}#side a{color:#e6edf8}
 @media(max-width:820px){body.has-side main,body.has-side footer{margin-left:0}#side{transform:translateX(-100%);transition:transform .2s}body.side-open #side{transform:none}.btn.menu{order:-1;margin:0 8px 0 0}.pmenu .pn{display:none}}`);
 FX.hdr(()=>{const u=me(),bar=$('.bar-in');if(!u||!bar||document.body.dataset.area==='bare')return;
  document.body.classList.add('hdr-a11y');const old=$('#side');if(old)old.remove();document.body.classList.remove('has-side');
