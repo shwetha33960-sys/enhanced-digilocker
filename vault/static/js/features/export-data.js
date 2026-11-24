@@ -1,0 +1,8 @@
+/* "Export my data" buttons on the Profile page: CSV (documents) or JSON (everything). */
+FX.watch(()=>{const f=$('#pf');if(!f||$('#ex'))return;f.insertAdjacentHTML('afterend','<section class="card" id="ex" style="margin-top:16px"><h2 style="margin-top:0">Export my data</h2><p class="small muted">Download your document details, notifications and activity.</p><div class="row"><button class="btn alt" data-ex="csv" type="button">Export as CSV</button><button class="btn alt" data-ex="json" type="button">Export as JSON</button></div></section>')});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-ex]');if(!b)return;const u=me();
+ const dl=DV.docs().filter(d=>d.owner===u.id).map(({title,cat,kind,issuer,number,date,size,status})=>({title,cat,kind,issuer,number,date,size,status}));
+ let out,type,name;
+ if(b.dataset.ex==='json'){out=JSON.stringify({profile:{name:u.name,email:u.email},documents:dl,notifications:DV.notes().filter(n=>n.owner===u.id).map(({text,time,read})=>({text,time,read})),activity:DV.logs().filter(l=>l.user===u.email).map(({time,action,detail})=>({time,action,detail}))},null,2);type='application/json';name='my-data.json'}
+ else{const q=v=>'"'+(/^[=+\-@]/.test(String(v))?"'"+v:String(v)).replace(/"/g,'""')+'"';out=['Title,Category,Type,Issuer,Number,Date,Size,Status',...dl.map(d=>[d.title,d.cat,d.kind,d.issuer,d.number,d.date,d.size,d.status].map(q).join(','))].join('\n');type='text/csv';name='my-documents.csv'}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([out],{type}));a.download=name;a.click();DV.log(u.email,'Exported data',name,'profile');toast('Export downloaded.')});
