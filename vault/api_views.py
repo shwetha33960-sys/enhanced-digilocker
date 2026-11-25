@@ -56,7 +56,8 @@ def login_view(request):
     email = str(request.data.get("email", "")).strip().lower()
     password = str(request.data.get("password", ""))
 
-    user = authenticate(request, username=email, password=password)
+    account = User.objects.filter(email__iexact=email).first()
+    user = authenticate(request, username=account.username, password=password) if account else None
     if user is None:
         return Response({"error": "Email or password is incorrect."}, status=400)
 
@@ -66,7 +67,6 @@ def login_view(request):
 
     login(request, user)
     return Response(user_data(user))
-
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
